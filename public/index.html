@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chat with friend in realtime</title>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+
+<body>
+    <header>
+        <nav class="bg-gray-800 w-full py-5 fixed block z-10"><a class="text-gray-200 pl-10 text-2xl capitalize" href="#">Welcome human!</a>
+        </nav>
+    </header>
+    <div class="flex flex-row sm:flex-col">
+        <aside class="bg-indigo-200 md:h-screen md:w-1/4 fixed block w-full" id="mainrow">
+            <ul class="px-12 pt-32 pb-10" id="rooms">
+            </ul>
+        </aside>
+        <main role="main" class="w-full h-screen pt-32 bg-gray-200" id="registerScreen">
+            <h3 class="text-center text-2xl pb-20 pt-32 md:pt-2 text-gray-800">
+                Type in your details to chat
+            </h3>
+            <div class="text-center w-full max-w-md mx-auto mb-40">
+                <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 " id="loginScreenForm">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
+                            Name
+                        </label>
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Name" id="name" required>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+                            Email
+                        </label>
+                        <input class="shadow appearance-none border border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="Email" id="email" required>
+                    </div>
+                    <div class="flex items-center justify-center">
+                        <button class="bg-gray-800 hover:bg-gray-600 text-white font-bold py-4 w-full rounded focus:outline-none focus:shadow-outline" type="submit">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+        <main role="main" class="text-center w-full pt-32 md:pt-2 bg-gray-200 h-screen hidden" id="main">
+            <h1 class="text-gray-800">Chats</h1>
+            <p class="pb-20 pt-32 ">👈 Select a chat to load the messages</p>
+            <h5 id="room-title" class="pb-4 text-gray-800"></h5>
+            <div class="response">
+                <form id="replyMessage" class="w-full max-w-md mx-auto mb-10">
+                    <input type="text" placeholder="Enter Message" class="fshadow appearance-none border border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" name="message" />
+                </form>
+            </div>
+            <div class="container mx-auto flex justify-center">
+                <table class="table table__stripped">
+                    <tbody id="chat-msgs">
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    <script src="https://js.pusher.com/4.0/pusher.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <script type="text/javascript" src="./js/app.js"></script>
+</body>
+
+</html>
