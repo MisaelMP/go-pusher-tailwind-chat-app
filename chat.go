@@ -6,16 +6,19 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 
 	pusher "github.com/pusher/pusher-http-go"
 )
 
-var client = pusher.Client{
-	AppId:   "785580",
-	Key:     "bae348577bf70ed5ad81",
-	Secret:  "32e805980beb242823bb",
-	Cluster: "ap4",
-	Secure:  true,
+var client = pusher.Client{}
+
+func init() {
+	client.AppId = os.Getenv("PUSHER_APP_ID")
+	client.Key = os.Getenv("PUSHER_KEY")
+	client.Secret = os.Getenv("PUSHER_SECRET")
+	client.Cluster = os.Getenv("PUSHER_CLUSTER")
+	client.Secure = true
 }
 
 type user struct {
@@ -51,11 +54,18 @@ func pusherAuth(res http.ResponseWriter, req *http.Request) {
 	fmt.Fprintf(res, string(response))
 }
 
+func serveConfigJS(rw http.ResponseWriter, req *http.Request) {
+	rw.Header().Set("Content-Type", "application/javascript")
+	fmt.Fprintf(rw, "window.PUSHER_KEY = \"%s\";\n", os.Getenv("PUSHER_KEY"))
+	fmt.Fprintf(rw, "window.PUSHER_CLUSTER = \"%s\";\n", os.Getenv("PUSHER_CLUSTER"))
+}
+
 func main() {
 	http.Handle("/", http.FileServer(http.Dir("./public")))
 
 	http.HandleFunc("/new/user", registerNewUser)
 	http.HandleFunc("/pusher/auth", pusherAuth)
+	http.HandleFunc("/config.js", serveConfigJS)
 
 	log.Fatal(http.ListenAndServe(":8090", nil))
 }
